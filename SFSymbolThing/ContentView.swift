@@ -28,7 +28,8 @@ struct ContentView: View {
                 }
                 exampleCard(title: "Rendering Modes", subtitle: "Multicolour") {
                     Image(systemName: "paintpalette")
-                        .renderingMode(.original)
+                        .symbolRenderingMode(.multicolor)
+//                        .renderingMode(.original) // iOS 14
                         .font(.system(size: 120))
                 }
                 exampleCard(title: "Rendering Modes", subtitle: "Palette") {
@@ -141,6 +142,28 @@ struct ContentView: View {
                     }
                     .buttonStyle(.bordered)
                 }
+                
+                // Text Interprolation
+                
+                exampleCard(title: "Text", subtitle: "Interpolation") {
+                    Text("Hello \(Image(systemName: "hand.wave")) World \(Image(systemName: "globe.asia.australia.fill"))")
+                        .font(.largeTitle)
+                }
+                
+                exampleCard(title: "Text", subtitle: "Label") {
+                    Label("Something important", systemImage: "exclamationmark.triangle.fill")
+                        .font(.title3)
+                    Label(
+                        title: {
+                            Text("Add a contact")
+                        },
+                        icon: {
+                            Image(systemName: "person.fill.badge.plus")
+                                .symbolRenderingMode(.hierarchical)
+                        }
+                    )
+                    .font(.title3)
+                }
 
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
@@ -151,8 +174,8 @@ struct ContentView: View {
     @ViewBuilder
     private func exampleCard<Content: View>(title: String, subtitle: String, @ViewBuilder content: @escaping () -> Content) -> some View {
         VStack(spacing: 20) {
-            Text(title).font(.largeTitle.bold())
-            Text(subtitle).font(.title.bold())
+            Text(title).font(.title.bold())
+            Text(subtitle).font(.subheadline.bold())
             content()
         }
         .frame(maxWidth: 280, maxHeight: 340)
